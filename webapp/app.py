@@ -1,16 +1,17 @@
 import streamlit as st
+import torch
 import torch.nn as nn
 import numpy as np
 import sys
 import os
 sys.path.append("../")
-from models.model import CustomModel 
+from AllNBAPredictionToolWork.models.model import CustomModel 
 
 st.title('NBA All-Team Binary Classification Model')
 
-os.chdir("../")
-min_values = np.load('/Users/ahhussain1017/nba_ml/AllNBAPredictionToolWork/Data/min_values.npy')
-max_values = np.load('/Users/ahhussain1017/nba_ml/AllNBAPredictionToolWork/Data/max_values.npy')
+
+min_values = np.load('Data/min_values.npy')
+max_values = np.load('Data/max_values.npy')
 
 GS = st.slider('Games Started', min_values[0], max_values[0])
 FG = st.slider('Field Goals Made', min_values[1], max_values[1])
@@ -27,7 +28,7 @@ input_data = torch.tensor([GS, FG, FGA, two_p, two_pa, AST, TOV, PTS, WS, VORP],
                           dtype=torch.float32)
 
 model = CustomModel(input_size = 10, hidden_size1 = 32, hidden_size2 = 16) 
-model.load_state_dict(torch.load('/Users/ahhussain1017/nba_ml/AllNBAPredictionToolWork/models/nbamodel.pt', map_location=torch.device('cpu')))
+model.load_state_dict(torch.load('models/nbamodel.pt', map_location=torch.device('cpu')))
 
 model.eval()
 
