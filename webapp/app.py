@@ -4,6 +4,11 @@ import torch.nn as nn
 import numpy as np
 import sys
 import os
+import path
+
+dir = path.Path(__file__).abspath()
+sys.path.append(dir.parent.parent)
+
 from models.model import CustomModel 
 
 st.title('NBA All-Team Binary Classification Model')
