@@ -4,8 +4,7 @@ import torch.nn as nn
 import numpy as np
 import sys
 import os
-sys.path.append("../")
-from AllNBAPredictionToolWork.models.model import CustomModel 
+from models.model import CustomModel 
 
 st.title('NBA All-Team Binary Classification Model')
 
