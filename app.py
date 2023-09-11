@@ -5,12 +5,10 @@ import numpy as np
 import sys
 import os
 import path
-import pandas as pd
 
 dir = path.Path(__file__).abspath()
 sys.path.append(dir.parent.parent)
 
-df = pd.read_csv("Dataset.csv")
 
 from model import CustomModel
 
