@@ -2,7 +2,7 @@ import torch.nn as nn
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv('Dataset.csv')
+df = pd.read_csv('DataSet.csv')
 df = df.loc[:,['GS', 'FG', 'FGA', '2P', '2PA', 'AST', 'TOV', 'PTS', 'WS', 'VORP']]
 
 class CustomModel(nn.Module):
