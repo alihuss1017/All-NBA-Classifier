@@ -11,7 +11,7 @@ sys.path.append(dir.parent.parent)
 
 
 from model import CustomModel
-
+st.set_page_config("Ali's NBA Web App")
 st.title('NBA All-Team Binary Classification Model')
 
 min_values = np.load('min_init_values.npy')
