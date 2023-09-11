@@ -5,17 +5,23 @@ import numpy as np
 import sys
 import os
 import path
+import pandas as pd
 
 dir = path.Path(__file__).abspath()
 sys.path.append(dir.parent.parent)
 
-from model import CustomModel 
+df = pd.read_csv("Dataset.csv")
+
+from model import CustomModel
 
 st.title('NBA All-Team Binary Classification Model')
 
+min_values = np.load('min_init_values.npy')
+max_values = np.load('max_init_values.npy')
 
-min_values = np.load('min_values.npy')
-max_values = np.load('max_values.npy')
+model = CustomModel(input_size = 10, hidden_size1 = 32, hidden_size2 = 16) 
+model.load_state_dict(torch.load('nbamodel.pt', map_location=torch.device('cpu')))
+
 
 GS = st.slider('Games Started', min_values[0], max_values[0])
 FG = st.slider('Field Goals Made', min_values[1], max_values[1])
@@ -28,11 +34,11 @@ PTS = st.slider('Points', min_values[7], max_values[7])
 WS = st.slider('Win Shares', min_values[8], max_values[8])
 VORP = st.slider('Value Over Replacement', min_values[9], max_values[9])
 
-input_data = torch.tensor([GS, FG, FGA, two_p, two_pa, AST, TOV, PTS, WS, VORP], 
-                          dtype=torch.float32)
+features = [GS, FG, FGA, two_p, two_pa, AST, TOV, PTS, WS, VORP]
+features = model.feature_scaling(features)
 
-model = CustomModel(input_size = 10, hidden_size1 = 32, hidden_size2 = 16) 
-model.load_state_dict(torch.load('nbamodel.pt', map_location=torch.device('cpu')))
+input_data = torch.tensor(features,  
+                          dtype=torch.float32)
 
 model.eval()
 

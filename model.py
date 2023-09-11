@@ -1,4 +1,10 @@
 import torch.nn as nn
+import numpy as np
+import pandas as pd
+
+df = pd.read_csv('Dataset.csv')
+df = df.loc[:,['GS', 'FG', 'FGA', '2P', '2PA', 'AST', 'TOV', 'PTS', 'WS', 'VORP']]
+
 class CustomModel(nn.Module):
     def __init__(self, input_size, hidden_size1, hidden_size2):
         super(CustomModel, self).__init__()
@@ -17,3 +23,9 @@ class CustomModel(nn.Module):
         x = self.fc3(x)
         x = self.sigmoid(x)
         return x
+    
+    def feature_scaling(self, x):
+        scaled_feats = []
+        for n in range(len(df.columns)):
+            scaled_feats.append((x[n] - np.mean(df.iloc[:,n])) / np.std(df.iloc[:,n]))  
+        return scaled_feats
