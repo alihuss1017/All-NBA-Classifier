@@ -6,23 +6,21 @@ df = pd.read_csv('DataSet.csv')
 df = df.loc[:,['GS', 'FG', 'FGA', '2P', '2PA', 'AST', 'TOV', 'PTS', 'WS', 'VORP']]
 
 class CustomModel(nn.Module):
-    def __init__(self, input_size, hidden_size1, hidden_size2):
+    def __init__(self, num_layers, num_neurons, input_size = len(df.columns)):
         super(CustomModel, self).__init__()
-        self.fc1 = nn.Linear(input_size, hidden_size1)
-        self.relu1 = nn.ReLU()
-        self.fc2 = nn.Linear(hidden_size1, hidden_size2)
-        self.relu2 = nn.ReLU()
-        self.fc3 = nn.Linear(hidden_size2, 1)
-        self.sigmoid = nn.Sigmoid()
+        self.layers = [nn.Linear(input_size, num_neurons), nn.ReLU()]
+
+        for layer in range(1, num_layers):
+            self.layers.append(nn.Linear(num_neurons, num_neurons))
+            self.layers.append(nn.ReLU())
+        
+        self.layers.append(nn.Linear(num_neurons, 1))
+        self.layers.append(nn.Sigmoid())
+
+        self.model = nn.Sequential(*self.layers)
 
     def forward(self, x):
-        x = self.fc1(x)
-        x = self.relu1(x)
-        x = self.fc2(x)
-        x = self.relu2(x)
-        x = self.fc3(x)
-        x = self.sigmoid(x)
-        return x
+        return self.model(x)
     
     def feature_scaling(self, x):
         scaled_feats = []
