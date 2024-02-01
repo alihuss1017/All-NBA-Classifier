@@ -29,18 +29,19 @@ def predict_page():
     # Load the model's state_dict
     model.load_state_dict(loaded_data['model_state_dict'])
 
-    GS = st.slider('Games Started', min_values[0], max_values[0])
-    FG = st.slider('Field Goals Made', min_values[1], max_values[1])
-    FGA = st.slider('Field Goals Attempted', min_values[2], max_values[2])
-    two_p = st.slider('Two Pointers Made', min_values[3], max_values[3])
-    two_pa = st.slider('Two Pointers Attempted', min_values[4], max_values[4])
-    AST = st.slider('Assists', min_values[5], max_values[5])
-    TOV = st.slider('Turnovers', min_values[6], max_values[6])
-    PTS = st.slider('Points', min_values[7], max_values[7])
-    WS = st.slider('Win Shares', min_values[8], max_values[8])
-    VORP = st.slider('Value Over Replacement', min_values[9], max_values[9])
+    GS = st.text_input('Games Started', '0')
+    FG = st.text_input('Field Goals Made', '0')
+    FGA = st.text_input('Field Goals Attempted', '0')
+    two_p = st.text_input('Two Pointers Made', '0')
+    two_pa = st.text_input('Two Pointers Attempted', '0')
+    AST = st.text_input('Assists', '0')
+    TOV = st.text_input('Turnovers', '0')
+    PTS = st.text_input('Points', '0')
+    WS = st.text_input('Win Shares', '0')
+    VORP = st.text_input('Value Over Replacement', '0')
 
-    features = [GS, FG, FGA, two_p, two_pa, AST, TOV, PTS, WS, VORP]
+    features = [float(GS), float(FG), float(FGA), float(two_p), float(two_pa), float(AST), float(TOV), float(PTS), float(WS), float(VORP)]
+
     features = model.feature_scaling(features)
 
     input_data = torch.tensor(features,  
