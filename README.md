@@ -1,4 +1,10 @@
-# SUMMARY
+# ALL-NBA TEAM BINARY CLASSIFCATION MODEL
+
+## WEB APP
+
+The web app was made with Streamlit and is available here: https://7i4xt8hqwtqepmryk7jcgg.streamlit.app/
+
+## SUMMARY
 The program aims to predict whether or not an NBA player would make an All-NBA team(1st, 2nd, or 3rd) dependent on their stats in the regular season. Implements the use of an SVM and logistic regression algorithm, comparing the results between the two using evaluation metrics such as precision and recall. 
 
 ## DATASET STATS
